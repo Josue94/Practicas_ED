@@ -23,21 +23,23 @@ class NodoDoblementeEnlazado
 		NodoDoblementeEnlazado<L> *siguiente_;
 		NodoDoblementeEnlazado<L> *anterior_;
 
+		friend class ListaOrdenadaDoblementeEnlazada<L>;
+
 	public:
 
-	NodoDoblementeEnlazado (L item, NodoDoblementeEnlazado<L> *sig=NULL, NodoDoblementeEnlazado<L> *ant=NULL)
-	{
-		siguiente_=sig;
-		anterior_=ant;
-	}
+	NodoDoblementeEnlazado (L item, NodoDoblementeEnlazado<L> *sig=NULL, NodoDoblementeEnlazado<L> *ant=NULL) : item_(item),siguiente_(sig),anterior_(ant){}
 
+	L& getItem()
+	{
+		return item_;
+	}
 
 	void setItem(L itemaux)
 	{
 		item_=itemaux;
 	}
 
-	NodoDoblementeEnlazado<L> getSiguiente()
+	NodoDoblementeEnlazado<L> * getSiguiente()
 	{
 		return siguiente_;
 	}
@@ -45,6 +47,11 @@ class NodoDoblementeEnlazado
 	void setSiguiente (NodoDoblementeEnlazado<L> *sig)
 	{
 		siguiente_=sig;
+	}
+
+	NodoDoblementeEnlazado<L> * getAnterior()
+	{
+		return anterior_;
 	}
 
 
@@ -56,7 +63,7 @@ class NodoDoblementeEnlazado
 
 
 
-	friend class ListaOrdenadaDoblementeEnlazada<L>;
+
 
 };
 

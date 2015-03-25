@@ -6,17 +6,20 @@
 CPP_SRCS += \
 ../ListaOrdenadaDoblementeEnlazada.cpp \
 ../generarpersona.cpp \
-../persona.cpp 
+../persona.cpp \
+../principal.cpp 
 
 OBJS += \
 ./ListaOrdenadaDoblementeEnlazada.o \
 ./generarpersona.o \
-./persona.o 
+./persona.o \
+./principal.o 
 
 CPP_DEPS += \
 ./ListaOrdenadaDoblementeEnlazada.d \
 ./generarpersona.d \
-./persona.d 
+./persona.d \
+./principal.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

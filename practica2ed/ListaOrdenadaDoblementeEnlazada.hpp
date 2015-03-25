@@ -10,6 +10,7 @@
 
 
 #include <iostream>
+#include "ListaOrdenadaDoblementeEnlazada.cpp"
 
 template<class L> class NodoDoblementeEnlazado;
 
@@ -24,12 +25,12 @@ class ListaOrdenadaDoblementeEnlazada
 
 	public:
 
-		ListaOrdenadaDoblementeEnlazada() : cabeza_(NULL),actual_(NULL) {};
+		ListaOrdenadaDoblementeEnlazada() : cabeza_(NULL),actual_(NULL) {}
 
 
-		~ListaOrdenadaDoblementeEnlazada () {} ; //Destructor
+		~ListaOrdenadaDoblementeEnlazada () {}//Destructor
 
-		NodoDoblementeEnlazado<L> getCabeza()
+		NodoDoblementeEnlazado<L>* getCabeza()
 		{
 			return cabeza_;
 		}
@@ -40,7 +41,7 @@ class ListaOrdenadaDoblementeEnlazada
 		}
 
 
-		NodoDoblementeEnlazado<L> getActual()
+		NodoDoblementeEnlazado<L>* getActual()
 		{
 			return actual_;
 		}
@@ -54,11 +55,11 @@ class ListaOrdenadaDoblementeEnlazada
 
 		bool esValida(int pos);
 
-		const L& item(const int pos);
+		const L& devuelveItem(const int pos);
 
 		int buscaItem(L item, int from);
 
-		void inserta(L item);
+		void insertar(L item);
 
 		void borraPosicion (int pos);
 
