@@ -10,17 +10,26 @@
 #include <iostream>
 using namespace std;
 
-//template<class L> class ListaOrdenadaDoblementeEnlazada;
-//template<class L> class NodoDoblementeEnlazado;
+
 
 int main()
 {
 	ListaOrdenadaDoblementeEnlazada<int> l;
 
-	l.insertar(5);
+	l.insertar(6);
+
 
 
 	cout <<l.getCabeza()->getItem()<<endl;
+	l.insertar(9);
+	cout <<l.getCabeza()->getItem()<<endl;
+	cout<<l.getCabeza()->getSiguiente()->getItem()<<endl;
+	l.insertar(12);
+	cout <<l.getCabeza()->getItem()<<endl;
+	cout<<l.getCabeza()->getSiguiente()->getItem()<<endl;
+	l.insertar(15);
+	cout <<l.getCabeza()->getItem()<<endl;
+	cout<<l.getCabeza()->getSiguiente()->getItem()<<endl;
 
 	return 0;
 }

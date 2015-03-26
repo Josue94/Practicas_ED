@@ -4,19 +4,16 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../ListaOrdenadaDoblementeEnlazada.cpp \
 ../generarpersona.cpp \
 ../persona.cpp \
 ../principal.cpp 
 
 OBJS += \
-./ListaOrdenadaDoblementeEnlazada.o \
 ./generarpersona.o \
 ./persona.o \
 ./principal.o 
 
 CPP_DEPS += \
-./ListaOrdenadaDoblementeEnlazada.d \
 ./generarpersona.d \
 ./persona.d \
 ./principal.d 
