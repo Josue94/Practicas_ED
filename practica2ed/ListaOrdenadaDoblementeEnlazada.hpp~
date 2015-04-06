@@ -10,7 +10,7 @@
 
 
 #include <iostream>
-using namespace std;
+
 template<class L> class NodoDoblementeEnlazado;
 
 template <class L>
@@ -29,7 +29,7 @@ class ListaOrdenadaDoblementeEnlazada
 
 		~ListaOrdenadaDoblementeEnlazada () {}//Destructor
 
-		NodoDoblementeEnlazado<L>* getCabeza() const
+		NodoDoblementeEnlazado<L>* getCabeza()
 		{
 			return cabeza_;
 		}
@@ -40,7 +40,7 @@ class ListaOrdenadaDoblementeEnlazada
 		}
 
 
-		NodoDoblementeEnlazado<L>* getActual() const
+		NodoDoblementeEnlazado<L>* getActual()
 		{
 			return actual_;
 		}
@@ -50,7 +50,19 @@ class ListaOrdenadaDoblementeEnlazada
 		{
 			actual_=act;
 		}
-		/*
+
+		NodoDoblementeEnlazado<L> * getSiguiente()
+		{
+			return actual_->getAnterior();
+		}
+
+			void setSiguiente (NodoDoblementeEnlazado<L> *sig)
+			{
+				actual_=setSiguiente(sig);
+			}
+
+
+
 		NodoDoblementeEnlazado<L>* getAnterior()
 		{
 					return actual_->getAnterior();
@@ -61,7 +73,9 @@ class ListaOrdenadaDoblementeEnlazada
 		{
 			actual_=setAnterior(act);
 		}
-		*/
+
+
+
 
 
 		bool esUltimo(int pos)
@@ -144,61 +158,54 @@ class ListaOrdenadaDoblementeEnlazada
 		void insertar(L item)
 		{
 			NodoDoblementeEnlazado<L> *nuevo;
-			NodoDoblementeEnlazado<L> *prev;//NULL;
 			bool encontrado=false;
-
+			int contador=0;
 
 			//Si la lista está vacía
 			if(getCabeza()==NULL)
 			{
-
-				setCabeza(new NodoDoblementeEnlazado<L>(item,NULL,NULL));
-
+				nuevo=new NodoDoblementeEnlazado<L>(item,NULL,NULL);
+				setCabeza(nuevo);
 			}
 			else
 			{
 				setActual(getCabeza());
 
-				while(getActual() !=NULL and not encontrado)
+				while(getActual() !=0 and not encontrado)
 				{
-					if(getActual()->getItem() > item)
+					if(getActual()->getItem()>item)
 					{
 						encontrado=true;
 					}
 					else
 					{
-						prev=getActual();
 						setActual(getActual()->getSiguiente());
-
+						contador++;
 					}//fin else
-
 				}//fin del while
 
-				//cout<<"sigo"<<endl;
-				if(not prev) //inserta antes de la cabeza
-				{
-					cout<<"he entrado"<<endl;
 
-						setCabeza(new NodoDoblementeEnlazado<L>(item,getActual(),NULL));
-						getActual()->setAnterior(getCabeza()); //Linko el actual con la nueva cabeza
+				if(encontrado)
+				{
+
+					if(contador==0)
+					{
+						nuevo=new NodoDoblementeEnlazado<L>(item,getActual(),NULL);
+						setCabeza(nuevo);
+						getActual()->setAnterior(getCabeza());
+					}
+					else
+					{
+						nuevo=new NodoDoblementeEnlazado<L>(item,getActual(),getActual()->getAnterior());
+
+						getAnterior()->setSiguiente(nuevo);
+						getActual()->setAnterior(nuevo);
+					}
 				}
-				else if (not getActual()) //inserta después del último
+				else
 				{
-						cout<<"he entrado2"<<endl;
-
-						prev->setSiguiente(new NodoDoblementeEnlazado<L>(item,NULL,prev));//Linko el ultimo con el nuevo nodo
-						//prev->getSiguiente()->setAnterior(prev);//Linko el último con el último viejo
-				}
-				else //Inserta entre dos elementos
-				{
-					cout<<"he entrado3"<<endl;
-
-
-					nuevo=new NodoDoblementeEnlazado<L>(item,getActual(),getActual()->getAnterior());
-					//Linkamos el anterior con el nuevo nodo
+					nuevo=new NodoDoblementeEnlazado<L>(item,NULL,getActual()->getAnterior());
 					getActual()->getAnterior()->setSiguiente(nuevo);
-
-
 				}
 
 
