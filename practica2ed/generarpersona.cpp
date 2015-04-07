@@ -1,3 +1,11 @@
+/*!
+  \file   generarpersona.cpp
+  \brief  Codificación de las funciones auxiliares para generar aleatoriamente personas
+  \author Name
+  \date   16/03/2015
+*/
+
+
 #include <cstdlib>
 #include <cstdio>
 #include <cstring> //Para manejar funciones de cadenas de c
@@ -6,6 +14,12 @@
 #include "generarpersona.hpp"
 #include "persona.hpp"
 
+//
+using namespace std;
+using namespace edi;
+
+
+//
 static const char * _apellidos[] = {
 "GARCIA",
 "FERNANDEZ",
@@ -271,4 +285,3 @@ vector <Persona> generarPersonas(char *fichero, int numeroPersonas)
   return personasSeleccionadas;
 	
 }
-

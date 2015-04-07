@@ -1,7 +1,59 @@
+/*!
+  \file persona.cpp
+  \brief  Implememtación de la clase Persona
+  \author Name
+  \date   16/03/2015
+*/
+
 #include <iostream>
 #include <cstring>
 #include "persona.hpp"
 
+using namespace std;
+using namespace edi;
+
+
+
+//////////////////////////////////////////////////////////////
+// IMPORTANTE
+
+// Las funciones amigas se incluyen en el espacio de nombre edi
+namespace edi{
+
+
+ostream & operator<<(ostream &stream, const Persona &p)
+{
+	stream << p.nombre() << " " << p.apellido() << " " << p.dni() << endl;
+	return stream;
+};
+
+
+
+istream &operator>>(istream &stream, Persona &p)
+{
+	char aux[30];
+	int dni;
+
+	cout << "Nombre: ";
+	stream >> aux;
+	p.nombre(aux);
+
+	cout << "Apellido: ";
+	stream >> aux;
+	p.apellido(aux);
+
+	cout << "Dni: ";
+	stream >> dni;
+	p.dni(dni);
+
+	//
+	p.borrado('n');
+
+	return stream;
+};
+} // fin del espacio de nombres edi
+
+//////////////////////////////////////////////////////////////
 
 
 Persona::Persona(const char * n, const char * a, const int &d)
@@ -9,7 +61,7 @@ Persona::Persona(const char * n, const char * a, const int &d)
 	nombre(n);
 	apellido(a);
 	dni(d);
-  borrado('n');
+	borrado('n');
 };
 
 Persona::Persona()
@@ -17,7 +69,7 @@ Persona::Persona()
 	nombre("");
 	apellido("");
 	dni(0);
-  borrado('n');
+  	borrado('n');
 };
 		
 Persona::Persona(const Persona &p)
@@ -80,32 +132,6 @@ bool Persona::operator>=(const Persona &p) const
 
 
 
-ostream & operator<<(ostream &stream, const Persona &p)
-{
-	stream << p.nombre() << " " << p.apellido() << " " << p.dni() << endl;
-	return stream;
-};
-
-
-
-istream &operator>>(istream &stream, Persona &p)
-{
-	char aux[30];
-	int dni;
-	cout << "Nombre: ";
-	stream >> aux;
-	p.nombre(aux);
-	cout << "Apellido: ";
-  stream >> aux;
-  p.apellido(aux);
-	cout << "Dni: ";
-	stream >> dni;
-	p.dni(dni);
-	p.borrado('n');
-	
-	return stream;
-};
-
 const char *Persona::nombre()const
 {
 	return (char *)_nombre;
@@ -145,4 +171,3 @@ void Persona::borrado(const char &borrado)
 {
 	_borrado = borrado;
 };
-

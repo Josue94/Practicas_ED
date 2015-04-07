@@ -6,52 +6,60 @@
  */
 #include "ListaOrdenadaDoblementeEnlazada.hpp"
 #include "NodoDoblementeEnlazado.hpp"
+#include "Asignatura.hpp"
+#include "generarpersona.hpp"
+#include "persona.hpp"
+#include <vector>
+
 
 #include <iostream>
 using namespace std;
+using namespace edi;
 
-
+ListaOrdenadaDoblementeEnlazada<Persona> crearAsignatura(int numAlumnos);
+void Mostrar(ListaOrdenadaDoblementeEnlazada<Persona> asignatura);
 
 int main()
 {
-	ListaOrdenadaDoblementeEnlazada<int> l;
-
-	l.insertar(6);
-
+	int N;
+	ListaOrdenadaDoblementeEnlazada<Persona> a;
 
 
-	cout <<l.getCabeza()->getItem()<<endl;
-	l.insertar(9);
-	cout <<l.getCabeza()->getItem()<<endl;
+	cout<<"¿Cuantos usuarios tiene la asignatura?"<<endl;
+	cin>>N;
 
 
-	cout<<l.getCabeza()->getSiguiente()->getItem()<<endl;
-	//cout<<l.getCabeza()->getSiguiente()->getAnterior()->getItem()<<endl;
+	a=crearAsignatura(N);
 
-
-	l.insertar(12);
-	cout <<l.getCabeza()->getItem()<<endl;
-	cout<<l.getCabeza()->getSiguiente()->getItem()<<endl;
-	cout<<l.getCabeza()->getSiguiente()->getSiguiente()->getItem()<<endl;
-
-	l.insertar(10);
-	cout <<l.getCabeza()->getItem()<<endl;
-	cout<<l.getCabeza()->getSiguiente()->getItem()<<endl;
-	cout<<l.getCabeza()->getSiguiente()->getSiguiente()->getAnterior()->getItem()<<endl;//tiene que dar 9
-	cout<<l.getCabeza()->getSiguiente()->getSiguiente()->getSiguiente()->getItem()<<endl;
-/*
-	l.insertar(20);
-	cout <<l.getCabeza()->getItem()<<endl;
-		cout<<l.getCabeza()->getSiguiente()->getItem()<<endl;
-		cout<<l.getCabeza()->getSiguiente()->getSiguiente()->getItem()<<endl;
-		cout<<l.getCabeza()->getSiguiente()->getSiguiente()->getSiguiente()->getItem()<<endl;
-		cout<<l.getCabeza()->getSiguiente()->getSiguiente()->getSiguiente()->getSiguiente()->getSiguiente()<<endl;
-
-*/
-	return 0;
+	Mostrar(a);
 }
 
+ListaOrdenadaDoblementeEnlazada<Persona> crearAsignatura(int numAlumnos)
+{
+	char nomFich[]="personas.txt";
+	vector<Persona> aux;
+	ListaOrdenadaDoblementeEnlazada<Persona> l;
 
+	aux=generarPersonas(nomFich,numAlumnos);
+	cout<<"sigue"<<endl;
+	for(int i=0; i<numAlumnos;i++)
+	{
+		l.insertar(aux[i]);
+		cout<<"entra "<<i <<endl;
+	}
 
+	return l;
+}
+
+void Mostrar(ListaOrdenadaDoblementeEnlazada<Persona> asignatura)
+{
+	asignatura.setActual(asignatura.getCabeza());
+	for(int i=0;asignatura.esValida(i);i++)
+	{
+		cout << asignatura.getActual()<<endl;
+		asignatura.setActual(asignatura.getActual()->getSiguiente());
+
+	}
+}
 
 
