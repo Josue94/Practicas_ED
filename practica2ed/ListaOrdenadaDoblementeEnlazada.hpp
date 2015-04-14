@@ -10,7 +10,7 @@
 
 #include <cassert>
 #include <iostream>
-
+using namespace std;
 
 template<class L> class NodoDoblementeEnlazado;
 
@@ -48,6 +48,17 @@ class ListaOrdenadaDoblementeEnlazada
 		void setActual (NodoDoblementeEnlazado<L> *act)
 		{
 			actual_=act;
+		}
+
+		NodoDoblementeEnlazado<L> * getAnterior()
+		{
+			return actual_->getAnterior();
+		}
+
+
+		void setAnterior (NodoDoblementeEnlazado<L> *ant)
+		{
+			actual_->setAnterior(ant);
 		}
 
 		/** @brief Ir a la posición de una lista dada.
@@ -102,23 +113,22 @@ class ListaOrdenadaDoblementeEnlazada
 		bool esValida(int pos)
 		{
 			setActual(getCabeza());
+			int nEle=0;
 
-				int nEle=0;
+			while(getActual()!=NULL)
+			{
+				setActual(getActual()->getSiguiente());
+				nEle++;
+			}
 
-				while(getActual()!=NULL)
-				{
-					setActual(getActual()->getSiguiente());
-					nEle++;
-				}
-
-				if(pos==nEle || pos<nEle)
-				{
-					return true;
-				}
-				else
-				{
-					return false;
-				}
+			if(pos==nEle || pos<nEle)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 
@@ -183,19 +193,21 @@ class ListaOrdenadaDoblementeEnlazada
 		/* @brief Función que inserta un item en una lista ordenada doblemente enlazada.
 		 * @arg[in] Item que va a ser insertado en la lista.
 		 */
-		void insertar(L item)
+		void insertar(const L& item)
 		{
 			NodoDoblementeEnlazado<L> *nuevo;
 			NodoDoblementeEnlazado<L> *prev;
-			bool encontrado=false;
+			int contador=0;
 
 			//Si la lista está vacía
 			if(getCabeza()==NULL)
 			{
-				setCabeza(new NodoDoblementeEnlazado<L>(item,NULL,NULL));
+				setCabeza(new NodoDoblementeEnlazado<L>(item,0,0));
 			}
 			else
 			{
+				bool encontrado=false;
+
 				setActual(getCabeza());
 
 				while(getActual() !=NULL and not encontrado)
@@ -208,40 +220,59 @@ class ListaOrdenadaDoblementeEnlazada
 					{
 						prev=getActual(); //Guardo el anterior
 						setActual(getActual()->getSiguiente());
+						contador++;
 					}
 				}
 
-				if(not prev) //inserta antes de la cabeza
+				if(encontrado) //inserta antes de la cabeza
 				{
-					setCabeza(new NodoDoblementeEnlazado<L>(item,getActual(),NULL));
+					if (contador==0)
+					{
+					nuevo=new NodoDoblementeEnlazado<L>(item,getCabeza(),0);
+					setCabeza(nuevo);
 					getActual()->setAnterior(getCabeza()); //Linko el actual con la nueva cabeza
-				}
-				else if (not getActual()) //inserta después del último
-				{
-					prev->setSiguiente(new NodoDoblementeEnlazado<L>(item,NULL,prev));//Linko el ultimo con el nuevo nodo
+					}
+					else //inserta entre dos elementos
+					{
+
+						nuevo=new NodoDoblementeEnlazado<L>(item,getActual(),getActual()->getAnterior());
+						//Linkamos el anterior con el nuevo nodo
+						getAnterior()->setSiguiente(nuevo);
+						getActual()->setAnterior(nuevo);
+					}
 
 				}
-				else //Inserta entre dos elementos
+				else //inserta después del último
 				{
-					nuevo=new NodoDoblementeEnlazado<L>(item,getActual(),getActual()->getAnterior());
-					//Linkamos el anterior con el nuevo nodo
-					getActual()->getAnterior()->setSiguiente(nuevo);
+					nuevo=new NodoDoblementeEnlazado<L>(item,0,prev);
+					prev->setSiguiente(nuevo);//Linko el ultimo con el nuevo nodo
+
 				}
 
 			}
 		}//Fin de la funcion insertar
 
-
-		void borraPosicion (int pos)
+		void deletePosition(const int pos)
 		{
 			assert(esValida(pos));
-
-			setActual(getCabeza());
-
-
-
-
+			#ifndef NDEBUG
+			bool oldIsLast = esUltimo(pos);
+			L oldItemNext = L();
+			if (not oldIsLast)
+			oldItemNext = devuelveItem(pos+1);
+			#endif
+			goTo(pos);
+			NodoDoblementeEnlazado<L> * old = getActual();
+			if (getAnterior()==0)
+			setCabeza(getActual()->next());
+			else
+			getAnterior()->setSiguiente(getActual()->getSiguiente());
+			delete old;
+			#ifndef NDEBUG
+			assert(oldIsLast or devuelveItem(pos)==oldItemNext);
+			#endif //NDEBUG
 		}
+
 
 };
 

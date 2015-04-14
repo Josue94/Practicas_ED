@@ -57,12 +57,8 @@ class NodoDoblementeEnlazado
 
 	void setAnterior (NodoDoblementeEnlazado<L> *ant)
 	{
-		siguiente_=ant;
+		anterior_=ant;
 	}
-
-
-
-
 
 
 };
